@@ -39,6 +39,11 @@ var lastY;
 var sphere = document.createElement('img');
 sphere.src = "images/sphere.png";
 
+function drawBackground(){
+  ctx2.fillStyle = 'black';
+  ctx2.fillRect(0 - w/2, 0 - h/2, w, h) //since translate puts 0,0 in the middle of the canvas
+}
+
 function drawSphere(x, y){
     ctx.save();
     ctx.beginPath();
@@ -57,6 +62,8 @@ function drawLines(){
   ctx.moveTo(0, 0);
   ctx.lineTo(x1, y1);
   ctx.lineTo(x2, y2);
+  ctx.strokeStyle = '#ffffff'
+  ctx.lineWidth = 2;
   ctx.stroke();
   ctx.closePath();
 }
@@ -70,7 +77,7 @@ function drawTrace(){
   ctx2.beginPath();
   ctx2.moveTo(lastX, lastY);
   ctx2.lineTo(x2, y2);
-  ctx2.strokeStyle = 'blue';
+  ctx2.strokeStyle = '#00ffff';
   ctx2.lineWidth = 0.5;
   ctx2.stroke();
   ctx2.closePath();
@@ -91,6 +98,7 @@ function update(){
 }
 
 sphere.onload = function(){
+  drawBackground()
   update();
 }
 
