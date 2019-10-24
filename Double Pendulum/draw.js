@@ -4,6 +4,7 @@ ctx.translate(300, 300);
 
 var canvas = document.getElementById('canvas2');
 var ctx2 = canvas.getContext('2d');
+ctx2.translate(300, 300);
 
 /*var canvas2 = document.getElementById('canvas2');
 var ctx2 = canvas.getContext('2d');*/
@@ -30,6 +31,9 @@ var acc2; // angluar acceleration of m2
 var g = 9.81; // gravitational constant
 var t = 0; // time variable
 var dt = 0.01; // time step variable for each iteration
+
+var lastX;
+var lastY;
 
 
 var sphere = document.createElement('img');
@@ -58,16 +62,16 @@ function drawLines(){
 }
 
 function setLast(){
-  lastX1 = x1;
-  lastY1 = y1;
-  lastX2 = x2;
-  lastY2 = y2;
+  lastX = x2;
+  lastY = y2;
 }
 
 function drawTrace(){
   ctx2.beginPath();
-  ctx2.moveTo(lastX1,   lastY1);
+  ctx2.moveTo(lastX, lastY);
   ctx2.lineTo(x2, y2);
+  ctx2.strokeStyle = 'blue';
+  ctx2.lineWidth = 0.5;
   ctx2.stroke();
   ctx2.closePath();
 }
@@ -81,6 +85,7 @@ function update(){
   drawLines();
   drawSphere(x1, y1);
   drawSphere(x2, y2);
+  drawTrace();
   setLast();
   requestAnimationFrame(update);
 }
@@ -102,7 +107,7 @@ function calculate(){
   x1 = r1 * Math.sin(ang1);
   y1 = -(r1 * Math.cos(ang1));
   x2 = x1 + r2 * Math.sin(ang2);
-  y2 = y1 + r2 * Math.cos(ang2);
+  y2 = (y1 + r2 * Math.cos(ang2));
 
   ang1 += 0.05;
   ang2 -= 0.075;
