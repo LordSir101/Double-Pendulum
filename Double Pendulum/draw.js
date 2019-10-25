@@ -1,10 +1,9 @@
 var canvas = document.getElementById('canvas1');
 var ctx = canvas.getContext('2d');
-ctx.translate(300, 300);
 
 var canvas = document.getElementById('canvas2');
 var ctx2 = canvas.getContext('2d');
-ctx2.translate(300, 300);
+
 
 /*var canvas2 = document.getElementById('canvas2');
 var ctx2 = canvas.getContext('2d');*/
@@ -12,14 +11,17 @@ var ctx2 = canvas.getContext('2d');*/
 var w = canvas.width;
 var h = canvas.height;
 
+ctx.translate(w/2, h/2);
+ctx2.translate(w/2, h/2);
+
 // Declaring variables and defualt values for the parameters of the double pendulum
 // Fixed reference point is the 2D origin (0,0)
-var m1 = 25; // mass 1
-var m2 = 25; // mass 2
-var r1 = 150; // radius of m1 from fixed point
-var r2 = 150; // radius of m2 from m2
-var ang1 = Math.PI / 2; // angle of m1 from fixed point reference
-var ang2 = Math.PI; // angle of m2 from m1 reference
+var m1 = 11; // mass 1
+var m2 = 10.5; // mass 2
+const r1 = 1.30; // radius of m1 from fixed point (m)
+const r2 = 1.80; // radius of m2 from m2
+var ang1 = -3.49//Math.PI ; // angle of m1 from fixed point reference
+var ang2 = 2.51//4*Math.PI / 3; // angle of m2 from m1 reference
 var x1; // x co-ordinate of m1
 var y1; // y co-ordinate of m1
 var x2; // x co-ordinate of m2
@@ -28,7 +30,7 @@ var w1 = 0; // angular velocity of m1
 var w2 = 0; // angular velocity of m2
 var acc1; // angluar acceleration of m1
 var acc2; // angluar acceleration of m2
-var g = 9.81; // gravitational constant
+var g = 9.81/3600; // gravitational constant (scaled to 60 fps)
 var t = 0; // time variable
 var dt = 0.01; // time step variable for each iteration
 
@@ -77,8 +79,12 @@ function drawTrace(){
   ctx2.beginPath();
   ctx2.moveTo(lastX, lastY);
   ctx2.lineTo(x2, y2);
-  ctx2.strokeStyle = '#00ffff';
-  ctx2.lineWidth = 0.5;
+  ctx2.strokeStyle = '#b3ffff';
+  ctx2.shadowColor = '#00e6e6';
+  ctx2.shadowBlur = 10;
+  ctx2.lineWidth = 2;
+  ctx.lineJoin = 'round'; //make edges smooth
+  ctx2.lineCap = 'round';
   ctx2.stroke();
   ctx2.closePath();
 }
@@ -104,19 +110,47 @@ sphere.onload = function(){
 
 // Calculations
 function calculate(){
+  /*
   acc1 = (((-g*(2*m1 + m2)*Math.sin(ang1) - m2*g*Math.sin(ang1 - 2*ang2)) -
   (2*Math.sin(ang1 - ang2)*m2*(Math.pow(w2, 2)*r2 + Math.pow(w1, 2)*r1*Math.cos(ang1 - ang2)))) /
   r1*(2*m1 + m2 - m2*Math.cos(2*ang1 - 2*ang2)));
 
   acc2 = ((2*Math.sin(ang1 - ang2) * ((Math.pow(w1,2)*r1*(m1 + m2)) + (g*(m1 + m2)*Math.cos(ang1)) +
   (Math.pow(w2,2)*r2*m2*Math.cos(ang1 - ang2)))) /
-  (r2 * (2*m1 + m2 - m2*Math.cos(2*ang1 - 2*ang2))));
+  (r2 * (2*m1 + m2 - m2*Math.cos(2*ang1 - 2*ang2))));*/
+
+
+  var num1 = -g * (2 * m1 + m2) * Math.sin(ang1);
+  var num2 = -m2 * g * Math.sin(ang1-2*ang2);
+  var num3 = -2*Math.sin(ang1-ang2)*m2;
+  var num4 = w2*w2*r2+w1*w1*r1*Math.cos(ang1-ang2);
+  var den = r1 * (2*m1+m2-m2*Math.cos(2*ang1-2*ang2));
+  acc1 = (num1 + num2 + num3*num4) / den;
+
+  num1 = 2 * Math.sin(ang1-ang2);
+  num2 = (w1*w1*r1*(m1+m2));
+  num3 = g * (m1 + m2) * Math.cos(ang1);
+  num4 = w2*w2*r2*m2*Math.cos(ang1-ang2);
+  den = r2 * (2*m1+m2-m2*Math.cos(2*ang1-2*ang2));
+  acc2 = (num1*(num2+num3+num4)) / den;
 
   x1 = r1 * Math.sin(ang1);
-  y1 = -(r1 * Math.cos(ang1));
+  y1 = (r1 * Math.cos(ang1));
   x2 = x1 + r2 * Math.sin(ang2);
   y2 = (y1 + r2 * Math.cos(ang2));
 
-  ang1 += 0.05;
-  ang2 -= 0.075;
+  //multiply by 100 to scale the position in meters to pixels for aesthetics
+  x1 *= 100;
+  y1 *= 100;
+  x2 *= 100;
+  y2 *= 100;
+
+
+  w1 += acc1;
+  w2 += acc2;
+  ang1 += w1;
+  ang2 += w2;
+
+  console.log("pos " + x1 + " " + y1);
+
 }
