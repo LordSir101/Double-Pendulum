@@ -16,12 +16,12 @@ ctx2.translate(w/2, h/2);
 
 // Declaring variables and defualt values for the parameters of the double pendulum
 // Fixed reference point is the 2D origin (0,0)
-var m1 = 11; // mass 1
-var m2 = 10.5; // mass 2
-const r1 = 1.30; // radius of m1 from fixed point (m)
-const r2 = 1.80; // radius of m2 from m2
-var ang1 = -3.49//Math.PI ; // angle of m1 from fixed point reference
-var ang2 = 2.51//4*Math.PI / 3; // angle of m2 from m1 reference
+var m1 = Math.random()*4 + 4; // mass 1
+var m2 = Math.random()*4 + 4; // mass 2
+const r1 = Math.random() + 1; // radius of m1 from fixed point (m)
+const r2 =  Math.random() + 1; // radius of m2 from m2
+var ang1 = - Math.random()*6.3;//Math.PI ; // angle of m1 from fixed point reference
+var ang2 = Math.random()*6.3;//4*Math.PI / 3; // angle of m2 from m1 reference
 var x1; // x co-ordinate of m1
 var y1; // y co-ordinate of m1
 var x2; // x co-ordinate of m2
@@ -30,7 +30,7 @@ var w1 = 0; // angular velocity of m1
 var w2 = 0; // angular velocity of m2
 var acc1; // angluar acceleration of m1
 var acc2; // angluar acceleration of m2
-var g = 9.81/3600; // gravitational constant (scaled to 60 fps)
+var g = -9.81/3600; // gravitational constant (scaled to 60 fps)
 var t = 0; // time variable
 var dt = 0.01; // time step variable for each iteration
 
@@ -65,7 +65,7 @@ function drawLines(){
   ctx.lineTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.strokeStyle = '#ffffff'
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 3;
   ctx.stroke();
   ctx.closePath();
 }
@@ -139,6 +139,11 @@ function calculate(){
   x2 = x1 + r2 * Math.sin(ang2);
   y2 = (y1 + r2 * Math.cos(ang2));
 
+  console.log("pos " + x2 + " " + y2);
+
+  y1 *= -1;
+  y2 *= -1;
+
   //multiply by 100 to scale the position in meters to pixels for aesthetics
   x1 *= 100;
   y1 *= 100;
@@ -151,6 +156,5 @@ function calculate(){
   ang1 += w1;
   ang2 += w2;
 
-  console.log("pos " + x1 + " " + y1);
 
 }
