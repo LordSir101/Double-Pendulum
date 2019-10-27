@@ -19,7 +19,7 @@ ctx2.translate(w/2, h/2);
 var m1 = Math.random()*4 + 4; // mass 1
 var m2 = Math.random()*4 + 4; // mass 2
 const r1 = Math.random() + 1; // radius of m1 from fixed point (m)
-const r2 =  Math.random() + 1; // radius of m2 from m2
+const r2 = Math.random() + 1; // radius of m2 from m2
 var ang1 = - Math.random()*6.3;//Math.PI ; // angle of m1 from fixed point reference
 var ang2 = Math.random()*6.3;//4*Math.PI / 3; // angle of m2 from m1 reference
 var x1; // x co-ordinate of m1
@@ -30,7 +30,7 @@ var w1 = 0; // angular velocity of m1
 var w2 = 0; // angular velocity of m2
 var acc1; // angluar acceleration of m1
 var acc2; // angluar acceleration of m2
-var g = -9.81/3600; // gravitational constant (scaled to 60 fps)
+var g = 9.81/3600; // gravitational constant (scaled to 60 fps)
 var t = 0; // time variable
 var dt = 0.01; // time step variable for each iteration
 
@@ -135,12 +135,13 @@ function calculate(){
   acc2 = (num1*(num2+num3+num4)) / den;
 
   x1 = r1 * Math.sin(ang1);
-  y1 = (r1 * Math.cos(ang1));
+  y1 = (-r1 * Math.cos(ang1));
   x2 = x1 + r2 * Math.sin(ang2);
-  y2 = (y1 + r2 * Math.cos(ang2));
+  y2 = (y1 - r2 * Math.cos(ang2));
 
   console.log("pos " + x2 + " " + y2);
 
+  //reverse the y-coordinates so that the pendulum is drawn in the right place
   y1 *= -1;
   y2 *= -1;
 
