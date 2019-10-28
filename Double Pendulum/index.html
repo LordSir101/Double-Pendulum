@@ -7,11 +7,67 @@
 
   <body>
 
+    <div class="leftSide">
+        <form id="valueForm">
+          <fieldset id="title">
+            <legend>Initial Values</legend>
+
+            <legend>Pendulum 1</legend>
+            <ul>
+              <li>
+                <label for='mass' class="textLabel">Mass</label>
+                <input type="text" class="textfield" id="mass" />
+              </li>
+              <li>
+                <label for='length' class="textLabel">Rod length</label>
+                <input type="text" class="textfeild" id="length" />
+              </li>
+              <li>
+                <label for='angle' class="textLabel">Angle from vertical</label>
+                <input type="text" class="textfeild" id="angle" />
+              </li>
+            </ul>
+
+            <legend>Pendulum2</legend>
+            <ul>
+              <li>
+                <label for='mass2' class="textLabel">Mass</label>
+                <input type="text" class="textfield" id="mass2" />
+              </li>
+              <li>
+                <label for='length2' class="textLabel">Rod length</label>
+                <input type="text" class="textfeild" id="length2" />
+              </li>
+              <li>
+                <label for='angle2' class="textLabel">Angle from vertical</label>
+                <input type="text" class="textfeild" id="angle2" />
+              </li>
+            </ul>
+
+            <div>
+              <ul>
+                <li class="buttonList">
+                  <button>Start</button>
+                </li>
+                <li class="buttonList">
+                  <button>Pause</button>
+                </li>
+                <li class="buttonList">
+                  <button>Reset</button>
+                </li>
+              </ul>
+            </div>
+          </fieldset>
+        </form>
+    </div><!--end leftSide-->
+
+    <div class = "rightSide">
       <!--creates the game board-->
       <div id="container">
-        <canvas id="canvas2" class="canvas" width="700px" height="700px"></canvas>
-        <canvas id="canvas1" class="canvas" width="700px" height="700px"></canvas>
+        <canvas id="canvas2" class="canvas" width="750px" height="750px"></canvas>
+        <canvas id="canvas1" class="canvas" width="750px" height="750px"></canvas>
       </div>
+    </div>
     <script type="text/javascript" src="draw.js"></script>
   </body>
 </html>
