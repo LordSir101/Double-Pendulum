@@ -40,8 +40,8 @@ li.buttonList{
   position: absolute;
   margin: auto;
   top: 20;
-  border:white 3px solid;
-  box-shadow: 3px 3px 2px #888888, -3px -3px 2px #888888, -3px 3px 2px #888888, 3px -3px 2px #888888;
+  border:black 3px solid;
+  box-shadow: 1px 1px 2px #585858, -1px -1px 2px #585858, -1px 1px 2px #585858, 1px -1px 2px #585858;
 }
 
 .leftSide{
@@ -68,4 +68,11 @@ li.buttonList{
 body{
   background-image: url("images/background 2.jpg");
   background-repeat: repeat;
+}
+
+#canvas2{
+  background-color: white;
+  background-image: url("images/pendulum diagram.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
