@@ -15,32 +15,32 @@
             <legend>Pendulum 1</legend>
             <ul>
               <li>
-                <label for='mass' class="textLabel">Mass</label>
-                <input type="number" class="textfield" step="0.01" name="input" id="m1" />
+                <label for='mass' class="textLabel">Mass (kg)</label>
+                <input type="number" class="textfield" step="0.01" name="input" id="m1"/>
               </li>
               <li>
-                <label for='length' class="textLabel">Rod length</label>
-                <input type="number" class="textfeild" step="0.01" name="input" id="r1" />
+                <label for='length' class="textLabel">Rod length (m)</label>
+                <input type="number" class="textfeild" step="0.01" name="input" id="r1"/>
               </li>
               <li>
-                <label for='angle' class="textLabel">Angle from vertical</label>
-                <input type="number" class="textfeild" step="0.01" name="input" id="ang1" />
+                <label for='angle' class="textLabel">Angle 1 from vertical (deg)</label>
+                <input type="number" class="textfeild" step="0.01" name="input" id="ang1"/>
               </li>
             </ul>
 
-            <legend>Pendulum2</legend>
+            <legend>Pendulum 2</legend>
             <ul>
               <li>
-                <label for='mass2' class="textLabel">Mass</label>
-                <input type="number" class="textfield" step="0.01" name="input" id="m2" />
+                <label for='mass2' class="textLabel">Mass (kg)</label>
+                <input type="number" class="textfield" step="0.01" name="input" id="m2"/>
               </li>
               <li>
-                <label for='length2' class="textLabel">Rod length</label>
-                <input type="number" class="textfeild" step="0.01" name="input" id="r2" />
+                <label for='length2' class="textLabel">Rod length (m)</label>
+                <input type="number" class="textfeild" step="0.01" name="input" id="r2"/>
               </li>
               <li>
-                <label for='angle2' class="textLabel">Angle from vertical</label>
-                <input type="number" class="textfeild" step="0.01" name="input" id="ang2" />
+                <label for='angle2' class="textLabel">Angle 2 from vertical (deg)</label>
+                <input type="number" class="textfeild" step="0.01" name="input" id="ang2"/>
               </li>
             </ul>
 
@@ -51,12 +51,31 @@
               <option value='red'>Red</option>
               <option value='orange'>Orange</option>
               <option value='yellow'>Yellow</option>
-              <option value='blue'>Blue</option>
+              <option value='blue' selected>Blue</option>
               <option value='green'>Green</option>
               <option value='violet'>Violet</option>
               <option value='pink'>Pink</option>
              </select>
            </div>
+
+           <div>
+             <label id="traceSwitchLabel">Trace Switch</label>
+             <input type="checkbox" id="traceSwitch" checked>(Checked = On)<br>
+          </div>
+
+          <div>
+            <label>Gravitational Constant (m/s^2)</label>
+            <select id='planet'>
+              <option id='mercury' value=3.7>Mercury (3.7)</option>
+              <option id='venus' value=8.87>Venus (8.87)</option>
+              <option id='earth' value=9.807 selected>Earth (9.807)</option>
+              <option id='mars' value=3.711>Mars (3.711)</option>
+              <option id='jupiter' value=24.79>Jupiter (24.79)</option>
+              <option id='saturn' value=10.44>Saturn (10.44)</option>
+              <option id='uranus' value=8.87>Uranus (8.87)</option>
+              <option id='neptune' value=11.15>Neptune (11.15)</option>
+            </select>
+          </div>
 
             <div>
               <ul>

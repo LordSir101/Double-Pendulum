@@ -35,9 +35,7 @@ var w1 = 0; // angular velocity of m1
 var w2 = 0; // angular velocity of m2
 var acc1; // angluar acceleration of m1
 var acc2; // angluar acceleration of m2
-var g = 9.81/3600; // gravitational constant (scaled to 60 fps)
-var t = 0; // time variable
-var dt = 0.01; // time step variable for each iteration
+var g = planetChoice(); // gravitational constant (scaled to 60 fps)
 
 var lineColor;
 var shadowColor;
@@ -52,13 +50,12 @@ var lastY = initialLastY;
 
 var animation;
 
+// event listeners for buttons
 startButton.addEventListener('click', setup);
 
 randomButton.addEventListener('click', randomSetup);
 
-resetButton.addEventListener('click', ()=>{
-  location.reload();
-});
+resetButton.addEventListener('click', resetButton);
 
 pauseButton.addEventListener('click', (e)=>{
   e.preventDefault();
@@ -149,7 +146,11 @@ function update(){
   drawLines();
   drawSphere(x1, y1);
   drawSphere(x2, y2);
-  drawTrace();
+
+  if (document.getElementById('traceSwitch').checked) {
+    drawTrace();
+  }
+  
   setLast();
   animation = requestAnimationFrame(update);
 }
@@ -196,7 +197,46 @@ function calculate(){
   w2 += acc2;
   ang1 += w1;
   ang2 += w2;
+}
 
+function planetChoice() {
+
+  // switch(document.getElementById('planet').selectedIndex) with cases could look cleaner
+  
+  // indeces for planets in order: 0 = Mercury ... 9 = Neptune
+  if (document.getElementById('planet').selectedIndex == 0){
+    g = parseFloat(document.getElementById('mercury').value) / 3600;
+    return g;
+  }
+  if (document.getElementById('planet').selectedIndex == 1){
+    g = parseFloat(document.getElementById('venus').value) / 3600;
+    return g;
+  }
+  if (document.getElementById('planet').selectedIndex == 2){
+    g = parseFloat(document.getElementById('earth').value) / 3600;
+    return g;
+  }
+  if (document.getElementById('planet').selectedIndex == 3) {
+    g = parseFloat(document.getElementById('mars').value) / 3600;
+    return g;
+  }  
+  if (document.getElementById('planet').selectedIndex == 4){
+    g = parseFloat(document.getElementById('jupiter').value) / 3600;
+    return g;
+  }
+
+  if (document.getElementById('planet').selectedIndex == 5){
+    g = parseFloat(document.getElementById('saturn').value) / 3600;
+    return g;
+  }
+  if (document.getElementById('planet').selectedIndex == 6){
+    g = parseFloat(document.getElementById('uranus').value) / 3600;
+    return g;
+  }
+  if (document.getElementById('planet').selectedIndex == 7){
+    g = parseFloat(document.getElementById('neptune').value) / 3600;
+    return g;
+  }
 }
 
 //sets random inputs------------------------------------------------------------------------------------------------------------------
@@ -215,17 +255,25 @@ function setRandomValues(){
   w2 = 0;
   acc1;
   acc2;
-  g = 9.81/3600;
+  g = planetChoice();
   t = 0;
   dt = 0.01;
   lastX = initialLastX;
   lastY = initialLastY;
+
+  // displaying the random value to 2 decimal places into the html form
+  document.getElementById('m1').value = m1.toFixed(2);
+  document.getElementById('m2').value = m2.toFixed(2);
+  document.getElementById('r1').value = r1.toFixed(2);
+  document.getElementById('r2').value = r2.toFixed(2);
+  document.getElementById('ang1').value = (ang1 * 180/(Math.PI)).toFixed(2);
+  document.getElementById('ang2').value = (ang2 * 180/(Math.PI)).toFixed(2);
 }
 
 //load correct sphere images based on user choice--------------------------------------------------------------------------------
 function loadSphere(){
 
-  var name= color.value;
+  var name = color.value;
 
   switch(name){
     case "red"://red
@@ -329,6 +377,7 @@ function setColor(){
 
 //resets values for new drawing-------------------------------------------------------------------------------------------------------
 function resetValues(){
+
   m1 = parseFloat(document.getElementById('m1').value);
   m2 = parseFloat(document.getElementById('m2').value);
   r1 = parseFloat(document.getElementById('r1').value);
@@ -343,10 +392,14 @@ function resetValues(){
   w2 = 0; // angular velocity of m2
   acc1; // angluar acceleration of m1
   acc2; // angluar acceleration of m2
-  g = 9.81/3600; // gravitational constant (scaled to 60 fps)
+  g = planetChoice(); // gravitational constant (scaled to 60 fps)
   t = 0; // time variable
   dt = 0.01; // time step variable for each iteration
   lastX = initialLastX;
   lastY = initialLastY;
+}
 
+function resetButton() {
+  location.reload();
+  resetValues();
 }
