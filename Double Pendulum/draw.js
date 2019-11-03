@@ -55,7 +55,9 @@ startButton.addEventListener('click', setup);
 
 randomButton.addEventListener('click', randomSetup);
 
-resetButton.addEventListener('click', resetButton);
+resetButton.addEventListener('click', ()=>{
+  location.reload();
+});
 
 pauseButton.addEventListener('click', (e)=>{
   e.preventDefault();
@@ -393,13 +395,6 @@ function resetValues(){
   acc1; // angluar acceleration of m1
   acc2; // angluar acceleration of m2
   g = planetChoice(); // gravitational constant (scaled to 60 fps)
-  t = 0; // time variable
-  dt = 0.01; // time step variable for each iteration
   lastX = initialLastX;
   lastY = initialLastY;
-}
-
-function resetButton() {
-  location.reload();
-  resetValues();
 }
