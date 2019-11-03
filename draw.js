@@ -257,8 +257,6 @@ function setRandomValues(){
   acc1;
   acc2;
   g = planetChoice();
-  t = 0;
-  dt = 0.01;
   lastX = initialLastX;
   lastY = initialLastY;
 
