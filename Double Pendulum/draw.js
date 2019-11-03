@@ -266,7 +266,7 @@ function setRandomValues(){
   /* this snippet mostly works except occaisionally when the random button is clicked it freezes the simulation
    I'm guessing it goes to an index out of range
    In randomSetup() I swapped the places of setRandomValues() and loadSphere()
-   because when this ran the trace and ball colours correspond
+   because when this code ran the trace and ball colours didn't correspond
   
   var colourSource = ["images/sphere red.png","images/sphere orange.png","images/sphere yellow.png","images/sphere.png","images/sphere green.png","images/sphere purple.png","images/sphere pink.png"];
   var colours = ["red","orange","yellow","blue","green","violet","pink"];
