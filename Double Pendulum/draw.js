@@ -290,7 +290,7 @@ function loadSphere(){
       sphere.src = "images/sphere.png";
       break;
     case "green"://green
-      sphere.src = "images/sphere green.png";S
+      sphere.src = "images/sphere green.png";
       break;
     case "violet"://violet
       sphere.src = "images/sphere purple.png";
