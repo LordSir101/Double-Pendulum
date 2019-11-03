@@ -136,8 +136,8 @@ function randomSetup(e){
   cancelAnimationFrame(animation);
   pauseButton.innerText = 'Pause';
   pauseButton.disabled = false;
-  loadSphere();
   setRandomValues();
+  loadSphere();
   drawBackground();
   setColor();
   update();
@@ -262,6 +262,19 @@ function setRandomValues(){
   lastX = initialLastX;
   lastY = initialLastY;
 
+  // set random colour
+  /* this snippet mostly works except occaisionally when the random button is clicked it freezes the simulation
+   I'm guessing it goes to an index out of range
+   In randomSetup() I swapped the places of setRandomValues() and loadSphere()
+   because when this ran the trace and ball colours correspond
+  
+  var colourSource = ["images/sphere red.png","images/sphere orange.png","images/sphere yellow.png","images/sphere.png","images/sphere green.png","images/sphere purple.png","images/sphere pink.png"];
+  var colours = ["red","orange","yellow","blue","green","violet","pink"];
+  var randomIndex = Math.floor(Math.random() * colours.length);
+  sphere.src = colourSource[randomIndex];
+  color.value = colours[randomIndex];
+  */
+
   // displaying the random value to 2 decimal places into the html form
   document.getElementById('m1').value = m1.toFixed(2);
   document.getElementById('m2').value = m2.toFixed(2);
@@ -298,7 +311,6 @@ function loadSphere(){
     case "pink"://pink
       sphere.src = "images/sphere pink.png";
       break;
-
   }
   console.log(sphere.src);
 }
