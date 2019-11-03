@@ -202,6 +202,7 @@ function calculate(){
   ang2 += w2;
 }
 
+// selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
 function planetChoice() {
   
   // indeces for planets in order: 0 = Mercury ... 7 = Neptune
