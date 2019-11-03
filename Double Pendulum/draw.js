@@ -10,6 +10,7 @@ var startButton = document.getElementById('start');
 var randomButton = document.getElementById('random');
 var resetButton = document.getElementById('reset');
 var pauseButton = document.getElementById('pause');
+var planetSelect = document.getElementById('planet');
 pauseButton.disabled = true; //disables pause button until start is pressed
 
 var w = canvas.width;
@@ -202,40 +203,38 @@ function calculate(){
 }
 
 function planetChoice() {
-
-  // switch(document.getElementById('planet').selectedIndex) with cases could look cleaner
   
-  // indeces for planets in order: 0 = Mercury ... 9 = Neptune
-  if (document.getElementById('planet').selectedIndex == 0){
+  // indeces for planets in order: 0 = Mercury ... 7 = Neptune
+  if (planetSelect.selectedIndex == 0){
     g = parseFloat(document.getElementById('mercury').value) / 3600;
     return g;
   }
-  if (document.getElementById('planet').selectedIndex == 1){
+  if (planetSelect.selectedIndex == 1){
     g = parseFloat(document.getElementById('venus').value) / 3600;
     return g;
   }
-  if (document.getElementById('planet').selectedIndex == 2){
+  if (planetSelect.selectedIndex == 2){
     g = parseFloat(document.getElementById('earth').value) / 3600;
     return g;
   }
-  if (document.getElementById('planet').selectedIndex == 3) {
+  if (planetSelect.selectedIndex == 3) {
     g = parseFloat(document.getElementById('mars').value) / 3600;
     return g;
   }  
-  if (document.getElementById('planet').selectedIndex == 4){
+  if (planetSelect.selectedIndex == 4){
     g = parseFloat(document.getElementById('jupiter').value) / 3600;
     return g;
   }
 
-  if (document.getElementById('planet').selectedIndex == 5){
+  if (planetSelect.selectedIndex == 5){
     g = parseFloat(document.getElementById('saturn').value) / 3600;
     return g;
   }
-  if (document.getElementById('planet').selectedIndex == 6){
+  if (planetSelect.selectedIndex == 6){
     g = parseFloat(document.getElementById('uranus').value) / 3600;
     return g;
   }
-  if (document.getElementById('planet').selectedIndex == 7){
+  if (planetSelect.selectedIndex == 7){
     g = parseFloat(document.getElementById('neptune').value) / 3600;
     return g;
   }
@@ -291,7 +290,7 @@ function loadSphere(){
       sphere.src = "images/sphere.png";
       break;
     case "green"://green
-      sphere.src = "images/sphere green.png";
+      sphere.src = "images/sphere green.png";S
       break;
     case "violet"://violet
       sphere.src = "images/sphere purple.png";
