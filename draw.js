@@ -5,11 +5,14 @@ var canvas = document.getElementById('canvas2');
 var ctx2 = canvas.getContext('2d');
 
 var sphere = document.createElement('img');
+sphere.src = "images/sphere.png"; //default image
+
 var color = document.getElementById('color'); //the color the user selects in dropdown menu
 var startButton = document.getElementById('start');
 var randomButton = document.getElementById('random');
 var resetButton = document.getElementById('reset');
 var pauseButton = document.getElementById('pause');
+var text = document.getElementById('pause');
 var planetSelect = document.getElementById('planet');
 pauseButton.disabled = true; //disables pause button until start is pressed
 
@@ -51,10 +54,13 @@ var lastY = initialLastY;
 
 var animation;
 
-// event listeners for buttons
-startButton.addEventListener('click', setup);
+//when the images are loaded, the buttons will work.  Prevents image flickering at the beginning
+sphere.onload = function(){
+  // event listeners for buttons
+  startButton.addEventListener('click', setup);
 
-randomButton.addEventListener('click', randomSetup);
+  randomButton.addEventListener('click', randomSetup);
+}
 
 resetButton.addEventListener('click', ()=>{
   location.reload();
@@ -62,13 +68,16 @@ resetButton.addEventListener('click', ()=>{
 
 pauseButton.addEventListener('click', (e)=>{
   e.preventDefault();
-  if(pauseButton.innerText == 'Pause'){
+
+  if(text.innerHTML == 'Pause'){
     cancelAnimationFrame(animation);
-    pauseButton.innerText = 'Resume';
+    text.innerHTML = 'Resume';
+    text.className= "btnText";
   }
   else{
     update();
-    pauseButton.innerText = 'Pause';
+    text.innerHTML = 'Pause';
+    text.className= "btnText"
   }
 });
 
@@ -79,15 +88,13 @@ function validateForm(){
 
   //Changes all border clors to black in case the form was validated multiple times
   for(i = 0; i < inputs.length; i++ ){
-    inputs[i].style.borderColor = 'gray';
-    inputs[i].style.borderWidth = '1px';
+    inputs[i].style.border = '1.5px solid #282828';
   }
 
   //check if any field is blank
   for(i = 0; i < inputs.length; i++ ){
     if(inputs[i].value == ''){
-      inputs[i].style.borderColor = '#ff3333'; //changes wrong input border to red
-      inputs[i].style.borderWidth = '1px';
+      inputs[i].style.border = '1.5px solid #cc0000'; //changes wrong input border to red
       valid = false;
     }
   }
@@ -100,8 +107,7 @@ function validateForm(){
   for(i = 0; i < inputs.length; i++ ){
     if(inputs[i].getAttribute('id') != 'ang1' && inputs[i].getAttribute('id') != 'ang2' ){
       if(inputs[i].value < 0){
-        inputs[i].style.borderColor = '#ff3333'; //changes wrong input border to red
-        inputs[i].style.borderWidth = '1px';
+        inputs[i].style.border = '1.5px solid #cc0000'; //changes wrong input border to red
         valid = false;
       }
     }
@@ -121,7 +127,8 @@ function setup(e){
   if(!valid){return;}
 
   cancelAnimationFrame(animation);
-  pauseButton.innerText = 'Pause';
+  text.innerHTML = 'Pause';
+  text.className = "btnText";
   pauseButton.disabled = false;
   loadSphere();
   resetValues();
@@ -134,8 +141,16 @@ function setup(e){
 function randomSetup(e){
   e.preventDefault();
   cancelAnimationFrame(animation);
-  pauseButton.innerText = 'Pause';
+  text.innerHTML = 'Pause';
+  text.className = "btnText";
   pauseButton.disabled = false;
+
+  var inputs = document.forms["valueForm"].elements['input'];
+  //Changes all border clors to black in case the form was validated multiple times
+  for(i = 0; i < inputs.length; i++ ){
+    inputs[i].style.border = '1.5px solid #282828';
+  }
+
   setRandomValues();
   loadSphere();
   drawBackground();
@@ -153,7 +168,7 @@ function update(){
   if (document.getElementById('traceSwitch').checked) {
     drawTrace();
   }
-  
+
   setLast();
   animation = requestAnimationFrame(update);
 }
@@ -204,38 +219,38 @@ function calculate(){
 
 // selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
 function planetChoice() {
-  
+
   // indeces for planets in order: 0 = Mercury ... 7 = Neptune
   if (planetSelect.selectedIndex == 0){
     g = parseFloat(document.getElementById('mercury').value) / 3600;
     return g;
   }
-  if (planetSelect.selectedIndex == 1){
+  else if (planetSelect.selectedIndex == 1){
     g = parseFloat(document.getElementById('venus').value) / 3600;
     return g;
   }
-  if (planetSelect.selectedIndex == 2){
+  else if (planetSelect.selectedIndex == 2){
     g = parseFloat(document.getElementById('earth').value) / 3600;
     return g;
   }
-  if (planetSelect.selectedIndex == 3) {
+  else if (planetSelect.selectedIndex == 3) {
     g = parseFloat(document.getElementById('mars').value) / 3600;
     return g;
-  }  
-  if (planetSelect.selectedIndex == 4){
+  }
+  else if (planetSelect.selectedIndex == 4){
     g = parseFloat(document.getElementById('jupiter').value) / 3600;
     return g;
   }
 
-  if (planetSelect.selectedIndex == 5){
+  else if (planetSelect.selectedIndex == 5){
     g = parseFloat(document.getElementById('saturn').value) / 3600;
     return g;
   }
-  if (planetSelect.selectedIndex == 6){
+  else if (planetSelect.selectedIndex == 6){
     g = parseFloat(document.getElementById('uranus').value) / 3600;
     return g;
   }
-  if (planetSelect.selectedIndex == 7){
+  else if (planetSelect.selectedIndex == 7){
     g = parseFloat(document.getElementById('neptune').value) / 3600;
     return g;
   }
@@ -260,19 +275,6 @@ function setRandomValues(){
   g = planetChoice();
   lastX = initialLastX;
   lastY = initialLastY;
-
-  // set random colour
-  /* this snippet mostly works except occaisionally when the random button is clicked it freezes the simulation
-   I'm guessing it goes to an index out of range
-   (next day update: seems to be fine now. lemme know if it causes trouble)
-   In randomSetup() I swapped the places of setRandomValues() and loadSphere()
-   because when this code ran the trace and ball colours didn't correspond */
-  
-  var colourSource = ["images/sphere red.png","images/sphere orange.png","images/sphere yellow.png","images/sphere.png","images/sphere green.png","images/sphere purple.png","images/sphere pink.png"];
-  var colours = ["red","orange","yellow","blue","green","violet","pink"];
-  var randomIndex = Math.floor(Math.random() * colours.length);
-  sphere.src = colourSource[randomIndex];
-  color.value = colours[randomIndex];
 
   // displaying the random value to 2 decimal places into the html form
   document.getElementById('m1').value = m1.toFixed(2);
