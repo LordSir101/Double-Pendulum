@@ -426,9 +426,9 @@ function rk4() {
 
   var k1 = (num1 + num2 + num3 * num4) / den1;
   var num5 = w2*w2*r2+(w1 + k1/2)*(w1 + k1/2)*r1*Math.cos(ang1-ang2);
-  var k2 = (0.5) * (num1 + num2 + num3 * num5) / den1;
+  var k2 = (0.5) * (num1 + num2 + num3 * num5) / den1; // maybe by a factor of 1.5 since it's evaluated at t + h/2
   var num6 = w2*w2*r2+(w1 + k2/2)*(w1 + k2/2)*r1*Math.cos(ang1-ang2);
-  var k3 = (0.5) * (num1 + num2 + num3 * num6) / den1;
+  var k3 = (0.5) * (num1 + num2 + num3 * num6) / den1; // maybe by a factor of 1.5 since it's evaluated at t + h/2
 
   // next iteration for w2----------------------------------------
   var num8 = 2 * Math.sin(ang1-ang2);
@@ -439,11 +439,11 @@ function rk4() {
 
   var j1 = (num8 * (num9 + num10 + num11)) / den2;
   var num12 = (w2 + j1/2)*(w2 + j1/2)*r2*m2*Math.cos(ang1-ang2);
-  var j2 = (0.5) * (num8 * (num9 + num10 + num12)) / den2;
+  var j2 = (0.5) * (num8 * (num9 + num10 + num12)) / den2; // maybe by a factor of 1.5 since it's evaluated at t + h/2
   var num13 = (w2 + j2/2)*(w2 + j2/2)*r2*m2*Math.cos(ang1-ang2);
-  var j3 = (0.5) * (num8 * (num9 + num10 + num13)) / den2;
+  var j3 = (0.5) * (num8 * (num9 + num10 + num13)) / den2; // maybe by a factor of 1.5 since it's evaluated at t + h/2
 
-  // calculating values for the next theoretical iteration if rk4 weren't used. This is for the last k4 and j4
+  // calculating values for the next theoretical iteration if rk4 weren't used. This is for the last k4 and j4. Evaluated at time t + h
   w1Temp += k1;
   w2Temp += j1;
   ang1Temp += w1; // might adjust by w1Temp
