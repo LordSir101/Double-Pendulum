@@ -159,8 +159,14 @@ function randomSetup(e){
 }
 
 function update(){
-  //calculate();
-  rk4();
+  if (document.getElementById('iteration').selectedIndex == 0) {
+    calculate();
+  }
+
+  if (document.getElementById('iteration').selectedIndex == 1) {
+    rk4();
+  }
+
   ctx.clearRect(0 - w/2, 0 - h/2, w, h);
   drawLines();
   drawSphere(x1, y1);
