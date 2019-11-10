@@ -160,6 +160,7 @@ function randomSetup(e){
 
 function update(){
   calculate();
+  //rk4();
   ctx.clearRect(0 - w/2, 0 - h/2, w, h);
   drawLines();
   drawSphere(x1, y1);
@@ -409,4 +410,59 @@ function resetValues(){
   g = planetChoice(); // gravitational constant (scaled to 60 fps)
   lastX = initialLastX;
   lastY = initialLastY;
+}
+
+//Fourth Order Runge-Kutta Method for approximating the next iteration---------------------------------------------------------------
+function rk4() {
+
+  // next iteration for w1-----------------------------------------
+  var num1 = -g * (2 * m1 + m2) * Math.sin(ang1);
+  var num2 = -m2 * g * Math.sin(ang1-2*ang2);
+  var num3 = -2*Math.sin(ang1-ang2)*m2;
+  var num4 = w2*w2*r2+w1*w1*r1*Math.cos(ang1-ang2);
+  var den1 = r1 * (2*m1+m2-m2*Math.cos(2*ang1-2*ang2));
+
+  var k1 = (num1 + num2 + num3 * num4) / den1;
+  var num5 = w2*w2*r2+(w1 + k1/2)*(w1 + k1/2)*r1*Math.cos(ang1-ang2);
+  var k2 = (0.5) * (num1 + num2 + num3 * num5) / den1;
+  var num6 = w2*w2*r2+(w1 + k2/2)*(w1 + k2/2)*r1*Math.cos(ang1-ang2);
+  var k3 = (0.5) * (num1 + num2 + num3 * num6) / den1;
+  var num7 = w2*w2*r2+(w1 + k3)*(w1 + k3)*r1*Math.cos(ang1-ang2);
+  var k4 = (num1 + num2 + num3 * num7) / den1;
+
+  // next iteration for w2----------------------------------------
+  var num8 = 2 * Math.sin(ang1-ang2);
+  var num9 = (w1*w1*r1*(m1+m2));
+  var num10 = g * (m1 + m2) * Math.cos(ang1);
+  var num11 = w2*w2*r2*m2*Math.cos(ang1-ang2);
+  var den2 = r2 * (2*m1+m2-m2*Math.cos(2*ang1-2*ang2));
+
+  var j1 = (num8 * (num9 + num10 + num11)) / den2;
+  var num12 = (w2 + j1/2)*(w2 + j1/2)*r2*m2*Math.cos(ang1-ang2);
+  var j2 = (0.5) * (num8 * (num9 + num10 + num12)) / den2;
+  var num13 = (w2 + j2/2)*(w2 + j2/2)*r2*m2*Math.cos(ang1-ang2);
+  var j3 = (0.5) * (num8 * (num9 + num10 + num13)) / den2;
+  var num14 = (w2 + j3)*(w2 + j3)*r2*m2*Math.cos(ang1-ang2);
+  var j4 = (num8 * (num9 + num10 + num14)) / den2;
+
+  //get position based on angle
+  x1 = r1 * Math.sin(ang1);
+  y1 = (-r1 * Math.cos(ang1));
+  x2 = x1 + r2 * Math.sin(ang2);
+  y2 = (y1 - r2 * Math.cos(ang2));
+
+  //reverse the y-coordinates so that the pendulum is drawn in the right place
+  y1 *= -1;
+  y2 *= -1;
+
+  //multiply by 100 to scale the position in meters to pixels for aesthetics
+  x1 *= 100;
+  y1 *= 100;
+  x2 *= 100;
+  y2 *= 100;
+
+  w1 += (1 / 6) * (k1 + 2*k2 + 2*k3 + k4);
+  w2 += (1 / 6) * (j1 + 2*j2 + 2*j3 + j4);
+  ang1 += w1;
+  ang2 += w2;
 }
