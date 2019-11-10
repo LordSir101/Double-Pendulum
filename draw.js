@@ -498,8 +498,8 @@ function rk4() {
   // This is for the last k4 and j4. Evaluated at time t + h ----------------------------------
   w1Temp += k1;
   w2Temp += j1;
-  ang1Temp += w1; // might adjust by w1Temp
-  ang2Temp += w2; // might adjust by w2Temp
+  ang1Temp += w1;
+  ang2Temp += w2;
   
   var num15 = -g * (2 * m1 + m2) * Math.sin(ang1Temp);
   var num16 = -m2 * g * Math.sin(ang1Temp-2*ang2Temp);
