@@ -443,7 +443,8 @@ function rk4() {
   var num13 = (w2 + j2/2)*(w2 + j2/2)*r2*m2*Math.cos(ang1-ang2);
   var j3 = (0.5) * (num8 * (num9 + num10 + num13)) / den2; // maybe by a factor of 1.5 since it's evaluated at t + h/2
 
-  // calculating values for the next theoretical iteration if rk4 weren't used. This is for the last k4 and j4. Evaluated at time t + h
+  // calculating values for the next theoretical iteration if rk4 weren't used.
+  // This is for the last k4 and j4. Evaluated at time t + h
   w1Temp += k1;
   w2Temp += j1;
   ang1Temp += w1; // might adjust by w1Temp
