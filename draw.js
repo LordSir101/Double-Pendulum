@@ -446,7 +446,6 @@ function rk4() {
   var den2 = r2 * (2*m1+m2-m2*Math.cos(2*ang1-2*ang2));
 
   var j1 = (num8 * (num9 + num10 + num11)) / den2;
-  
 
   // calculating values at t + h/2
   // for k2, j2-----------------------------------------------------
