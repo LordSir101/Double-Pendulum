@@ -228,15 +228,15 @@ function calculate(){
 function planetChoice() {
 
   // indeces for planets in order: 0 = Mercury ... 7 = Neptune
-  if (planetSelect.selectedIndex == 0){
+  if (planetSelect.selectedIndex == 0) {
     g = parseFloat(document.getElementById('mercury').value) / 3600;
     return g;
   }
-  else if (planetSelect.selectedIndex == 1){
+  else if (planetSelect.selectedIndex == 1) {
     g = parseFloat(document.getElementById('venus').value) / 3600;
     return g;
   }
-  else if (planetSelect.selectedIndex == 2){
+  else if (planetSelect.selectedIndex == 2) {
     g = parseFloat(document.getElementById('earth').value) / 3600;
     return g;
   }
@@ -244,21 +244,25 @@ function planetChoice() {
     g = parseFloat(document.getElementById('mars').value) / 3600;
     return g;
   }
-  else if (planetSelect.selectedIndex == 4){
+  else if (planetSelect.selectedIndex == 4) {
     g = parseFloat(document.getElementById('jupiter').value) / 3600;
     return g;
   }
 
-  else if (planetSelect.selectedIndex == 5){
+  else if (planetSelect.selectedIndex == 5) {
     g = parseFloat(document.getElementById('saturn').value) / 3600;
     return g;
   }
-  else if (planetSelect.selectedIndex == 6){
+  else if (planetSelect.selectedIndex == 6) {
     g = parseFloat(document.getElementById('uranus').value) / 3600;
     return g;
   }
-  else if (planetSelect.selectedIndex == 7){
+  else if (planetSelect.selectedIndex == 7) {
     g = parseFloat(document.getElementById('neptune').value) / 3600;
+    return g;
+  }
+  else if (planetSelect.selectedIndex == 8) {
+    g = parseFloat(document.getElementById('moon').value) / 3600;
     return g;
   }
 }
