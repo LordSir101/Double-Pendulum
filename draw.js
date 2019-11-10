@@ -159,11 +159,11 @@ function randomSetup(e){
 }
 
 function update(){
-  if (document.getElementById('iteration').selectedIndex == 0) {
+  if (document.getElementById('euler').selected) {
     calculate();
   }
 
-  if (document.getElementById('iteration').selectedIndex == 1) {
+  if (document.getElementById('rk4').selected) {
     rk4();
   }
 
