@@ -16,6 +16,7 @@ var dwnldButton = document.getElementById('download');
 var text = document.getElementById('pause');
 var planetSelect = document.getElementById('planet');
 pauseButton.disabled = true; //disables pause button until start is pressed
+pauseButton.style.opacity = 0.5;
 
 var method; //simulation method to use
 
@@ -81,13 +82,15 @@ pauseButton.addEventListener('click', (e)=>{
     cancelAnimationFrame(animation);
     text.innerHTML = 'Resume';
     text.className= "btnText";
-    dwnldButton.disabled = false; //disable download when simulation running
+    dwnldButton.disabled = false;
+    dwnldButton.style.opacity = 1;
   }
   else{
     update();
     text.innerHTML = 'Pause';
     text.className= "btnText";
     dwnldButton.disabled = true;
+    dwnldButton.style.opacity = 0.5; //disable download when simulation running
   }
 });
 
@@ -150,7 +153,9 @@ function setup(e){
   text.innerHTML = 'Pause';
   text.className = "btnText";
   pauseButton.disabled = false;
+  pauseButton.style.opacity = 1;
   dwnldButton.disabled = true;
+  dwnldButton.style.opacity = 0.5; //make it look disabled
 
   loadSphere();
   resetValues();
@@ -166,8 +171,9 @@ function randomSetup(e){
   text.innerHTML = 'Pause';
   text.className = "btnText";
   pauseButton.disabled = false;
+  pauseButton.style.opacity = 1;
   dwnldButton.disabled = true;
-
+  dwnldButton.style.opacity = 0.5;
 
   var inputs = document.forms["valueForm"].elements['input'];
   //Changes all border clors to black in case the form was validated multiple times
@@ -241,29 +247,7 @@ function calculate(){
   ang1 += w1;
   ang2 += w2;
 
-  //***calculate time elapsed***
-  var endTime = new Date();
-  var timeDiff = endTime - startTime; //in ms
-  // strip the ms
-  timeDiff /= 1000;
-
-  //every second, submit data to csv file;
-  if((endTime - previousTime) >= 1000){
-    // get seconds
-    var seconds = Math.round(timeDiff);
-
-    var degAng1 = ang1 * (180 / Math.PI);
-    var degAng2 = ang2 * (180 / Math.PI);
-
-    //make user the angles are between 0 and 360 deg;
-    if(degAng1 > 360){degAng1 -= 360;}
-    if(degAng1 < 0){degAng1 += 360;}
-    if(degAng2 > 360){degAng2 -= 360;}
-    if(degAng2 < 0){degAng2 += 360;}
-
-    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
-    previousTime = endTime;
-  }
+  submitData();
 
 }
 
@@ -379,11 +363,44 @@ function rk4() {
   w2 += (1 / 6) * (j1 + 2*j2 + 2*j3 + j4);
   ang1 += w1;
   ang2 += w2;
+
+  submitData();
+
 }
 
 //add data to csv file--------------------------------------------------------------------------------------------------
 function addData(time, ang1, ang2){
   csvContent += time + "," + ang1 + "," + ang2 + "\n";
+
+}
+
+//resusable function for each iteration method to allow data to be submitted to csv file
+function submitData() {
+  //***calculate time elapsed***
+  var endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  //every second, submit data to csv file;
+  if((endTime - previousTime) >= 1000){
+    // get seconds
+    var seconds = Math.round(timeDiff);
+
+    var degAng1 = ang1 * (180 / Math.PI);
+    var degAng2 = ang2 * (180 / Math.PI);
+
+    var rotations1 = Math.abs(Math.floor(degAng1 / 360)); //how many full rotations the pendulum has done
+    var rotations2 = Math.abs(Math.floor(degAng2 / 360));
+    //make user the angles are between 0 and 360 deg;
+    if(degAng1 > 360){degAng1 -= rotations1 * 360;}
+    if(degAng1 < 0){degAng1 += rotations1 * 360;}
+    if(degAng2 > 360){degAng2 -= rotations2 * 360;}
+    if(degAng2 < 0){degAng2 += rotations2 * 360;}
+
+    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
+    previousTime = endTime;
+  }
 }
 
 // selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
@@ -579,15 +596,15 @@ function resetValues(){
   r2 = parseFloat(document.getElementById('r2').value);
   ang1 = parseFloat(document.getElementById('ang1').value) * (Math.PI)/180;
   ang2 = parseFloat(document.getElementById('ang2').value) * (Math.PI)/180;
-  x1; // x co-ordinate of m1
-  y1; // y co-ordinate of m1
-  x2; // x co-ordinate of m2
-  y2; // y co-ordinate of m2
-  w1 = 0; // angular velocity of m1
-  w2 = 0; // angular velocity of m2
-  acc1; // angluar acceleration of m1
-  acc2; // angluar acceleration of m2
-  g = planetChoice(); // gravitational constant (scaled to 60 fps)
+  x1;
+  y1;
+  x2;
+  y2;
+  w1 = 0;
+  w2 = 0;
+  acc1;
+  acc2;
+  g = planetChoice();
   lastX = initialLastX;
   lastY = initialLastY;
   csvContent = "data:text/csv;charset=utf-8," + "Time (s), Angle 1 (deg), Angle 2 (deg)\n";
