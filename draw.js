@@ -451,8 +451,8 @@ function rk4() {
   // for k2, j2-----------------------------------------------------
   w1TempHalf1 += 0.5*k1;
   w2TempHalf1 += 0.5*j1;
-  ang1TempHalf1 += 0.5*w1;
-  ang2TempHalf1 += 0.5*w2;
+  ang1TempHalf1 += 0.5*w1TempHalf1;
+  ang2TempHalf1 += 0.5*w2TempHalf1;
   
   var num21 = -g * (2 * m1 + m2) * Math.sin(ang1TempHalf1);
   var num22 = -m2 * g * Math.sin(ang1TempHalf1-2*ang2TempHalf1);
@@ -474,8 +474,8 @@ function rk4() {
   // for k3, j3-----------------------------------------------------
   w1TempHalf2 += 0.5*k1;
   w2TempHalf2 += 0.5*j1;
-  ang1TempHalf2 += 0.5*w1;
-  ang2TempHalf2 += 0.5*w2;
+  ang1TempHalf2 += 0.5*w1TempHalf2;
+  ang2TempHalf2 += 0.5*w2TempHalf2;
 
   var num31 = -g * (2 * m1 + m2) * Math.sin(ang1TempHalf2);
   var num32 = -m2 * g * Math.sin(ang1TempHalf2-2*ang2TempHalf2);
@@ -497,8 +497,8 @@ function rk4() {
   // This is for the last k4 and j4. Evaluated at time t + h ----------------------------------
   w1Temp += k1;
   w2Temp += j1;
-  ang1Temp += w1;
-  ang2Temp += w2;
+  ang1Temp += w1Temp;
+  ang2Temp += w2Temp;
   
   var num41 = -g * (2 * m1 + m2) * Math.sin(ang1Temp);
   var num42 = -m2 * g * Math.sin(ang1Temp-2*ang2Temp);
