@@ -7,6 +7,16 @@
 
   <body>
 
+    <ul class="topbar">
+      <li class="topLink">
+        <a id='goSignUp' value='goSignUp' href="signup.html"><span class="btnText">Sign Up</span></a>
+      </li>
+      <li class="topLink">
+        <a id='goLogIn' value='goLogIn' href="login.html"><span class="btnText">Log In</span></a>
+      </li>
+    </ul>
+
+  <div class="content">
     <div class="leftSide">
         <form id="valueForm">
           <fieldset id="title">
@@ -82,13 +92,13 @@
           <div class="general">
             <label>Iterative Method</label>
             <select id="iteration">
-              <option id="euler">Euler-Cromer</option>
-              <option id="rk4">Runge-Kutta (4th Order)</option>
+              <option id="euler" value='euler'>Euler-Cromer</option>
+              <option id="rk4" value='rk4'>Runge-Kutta (4th Order)</option>
             </select>
           </div>
 
-            <div id="buttonWrap">
-              <ul id="buttons">
+            <div class="buttonWrap">
+              <ul class="buttons">
                 <li class="buttonList">
                   <button id='start' value='Start'><span class="btnText">Start</span></button>
                 </li>
@@ -103,6 +113,10 @@
                 </li>
               </ul>
             </div>
+
+            <div class="buttonWrap">
+              <button id='download' value='Download'><span class="btnText">Download CSV</span></button>
+            </div>
           </fieldset>
         </form>
     </div><!--end leftSide-->
@@ -114,6 +128,7 @@
         <canvas id="canvas1" class="canvas" width="700px" height="680px"></canvas>
       </div>
     </div>
+  </div><!--end content-->
     <script type="text/javascript" src="draw.js"></script>
   </body>
 </html>
