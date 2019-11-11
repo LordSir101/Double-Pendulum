@@ -1,4 +1,39 @@
+.topbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
 
+.toplink{
+  float: right;
+  display: inline-block;
+  padding: 0;
+  border-left: 1px solid #947d51;
+  margin-top: 0;
+}
+li a{
+  display: block;
+  text-align: center;
+  padding: 10px 16px;
+  background-color: #6B5A3F;
+  text-decoration: none;
+}
+
+li a:hover{
+  background-color: #917a55;
+}
+
+.content{
+  margin-top: 5%;
+  height: 1500px;
+  position: relative;
+}
 #container{
   /*container has to be relative so that the canvases can be positioned absolutly within the container
   (as opposed to absolutley withing the whole document*/
@@ -16,10 +51,9 @@
   margin-right:auto;
   margin-left: auto;
   margin-top: 5%;
-
 }
 
-#title{
+fieldset{
   border: 0;
 }
 
@@ -48,6 +82,7 @@ li.buttonList{
   display: inline-block;
   margin: 10px;
 }
+
 
 legend{
   color: #947d51;
@@ -92,19 +127,18 @@ select {
 .leftSide{
   height: 100%;
   width: 40%;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   top: 0;
   overflow-x: hidden;
   left: 0;
-
 }
 
-#buttons{
+.buttons{
   padding-left: 0;
   padding-top: 5%;
 }
-#buttonWrap{
+.buttonWrap{
   display: table;
   margin: 0 auto;
 }
@@ -119,6 +153,11 @@ button{
 
 }
 
+#download{
+  width: 155px;
+  height: 35px;
+}
+
 .btnText{
   font-family: 'arial';
   font-weight: bold;
@@ -128,10 +167,14 @@ button{
   text-shadow:  1px 1px 0.5px #101010, 1px -1px 0.5px #101010, -1px 1px 0.5px #101010, -1px -1px 0.5px #101010;
 }
 
+button:hover{
+  background-color: #917a55;
+}
+
 .rightSide{
   height: 100%;
   width: 60%;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   top: 0;
   overflow-x: hidden;
@@ -141,6 +184,7 @@ button{
 body{
   background-image: url("images/dark_wood.png");
   background-repeat: repeat;
+  margin: 0;
 }
 
 #canvas2{
@@ -148,4 +192,30 @@ body{
   background-image: url("images/pendulum diagram.png");
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/*Signup-------------------------------------------------------------------------------------*/
+#signupForm{
+  background-color: #505050;
+  border: 2px solid #52452d;
+  border-radius: 20px;
+  width: 60%;
+  margin-right:auto;
+  margin-left: auto;
+  margin-top: 5%;
+}
+
+.infoTitle{
+  margin:auto;
+
+}
+.infoInput{
+  margin: auto;
+  width: 50%;
+  padding: 0;
+}
+.infoInput li{
+  margin: auto;
+  margin-top: 10px;
+  width: 35%;
 }
