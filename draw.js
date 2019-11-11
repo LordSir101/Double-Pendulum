@@ -240,8 +240,9 @@ function calculate(){
   w2 += acc2;
   ang1 += w1;
   ang2 += w2;
-
+  
   submitData();
+
 }
 
 //Fourth Order Runge-Kutta Method for approximating the next iteration---------------------------------------------------------------
@@ -358,11 +359,13 @@ function rk4() {
   ang2 += w2;
 
   submitData();
+
 }
 
 //add data to csv file--------------------------------------------------------------------------------------------------
 function addData(time, ang1, ang2){
   csvContent += time + "," + ang1 + "," + ang2 + "\n";
+
 }
 
 //resusable function for each iteration method to allow data to be submitted to csv file
