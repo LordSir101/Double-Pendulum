@@ -241,30 +241,7 @@ function calculate(){
   ang1 += w1;
   ang2 += w2;
 
-  //***calculate time elapsed***
-  var endTime = new Date();
-  var timeDiff = endTime - startTime; //in ms
-  // strip the ms
-  timeDiff /= 1000;
-
-  //every second, submit data to csv file;
-  if((endTime - previousTime) >= 1000){
-    // get seconds
-    var seconds = Math.round(timeDiff);
-
-    var degAng1 = ang1 * (180 / Math.PI);
-    var degAng2 = ang2 * (180 / Math.PI);
-
-    //make user the angles are between 0 and 360 deg;
-    if(degAng1 > 360){degAng1 -= 360;}
-    if(degAng1 < 0){degAng1 += 360;}
-    if(degAng2 > 360){degAng2 -= 360;}
-    if(degAng2 < 0){degAng2 += 360;}
-
-    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
-    previousTime = endTime;
-  }
-
+  submitData();
 }
 
 //Fourth Order Runge-Kutta Method for approximating the next iteration---------------------------------------------------------------
@@ -379,11 +356,40 @@ function rk4() {
   w2 += (1 / 6) * (j1 + 2*j2 + 2*j3 + j4);
   ang1 += w1;
   ang2 += w2;
+
+  submitData();
 }
 
 //add data to csv file--------------------------------------------------------------------------------------------------
 function addData(time, ang1, ang2){
   csvContent += time + "," + ang1 + "," + ang2 + "\n";
+}
+
+//resusable function for each iteration method to allow data to be submitted to csv file
+function submitData() {
+  //***calculate time elapsed***
+  var endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  //every second, submit data to csv file;
+  if((endTime - previousTime) >= 1000){
+    // get seconds
+    var seconds = Math.round(timeDiff);
+
+    var degAng1 = ang1 * (180 / Math.PI);
+    var degAng2 = ang2 * (180 / Math.PI);
+
+    //make user the angles are between 0 and 360 deg;
+    if(degAng1 > 360){degAng1 -= 360;}
+    if(degAng1 < 0){degAng1 += 360;}
+    if(degAng2 > 360){degAng2 -= 360;}
+    if(degAng2 < 0){degAng2 += 360;}
+
+    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
+    previousTime = endTime;
+  }
 }
 
 // selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
