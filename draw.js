@@ -368,12 +368,6 @@ function rk4() {
 
 }
 
-//add data to csv file--------------------------------------------------------------------------------------------------
-function addData(time, ang1, ang2){
-  csvContent += time + "," + ang1 + "," + ang2 + "\n";
-
-}
-
 //resusable function for each iteration method to allow data to be submitted to csv file
 function submitData() {
   //***calculate time elapsed***
@@ -392,7 +386,7 @@ function submitData() {
 
     var rotations1 = Math.abs(Math.floor(degAng1 / 360)); //how many full rotations the pendulum has done
     var rotations2 = Math.abs(Math.floor(degAng2 / 360));
-    //make user the angles are between 0 and 360 deg;
+    //make sure the angles are between 0 and 360 deg;
     if(degAng1 > 360){degAng1 -= rotations1 * 360;}
     if(degAng1 < 0){degAng1 += rotations1 * 360;}
     if(degAng2 > 360){degAng2 -= rotations2 * 360;}
@@ -401,6 +395,12 @@ function submitData() {
     addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
     previousTime = endTime;
   }
+}
+
+//add data to csv file--------------------------------------------------------------------------------------------------
+function addData(time, ang1, ang2){
+  csvContent += time + "," + ang1 + "," + ang2 + "\n";
+
 }
 
 // selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
@@ -439,6 +439,10 @@ function planetChoice() {
   else if (planetSelect.selectedIndex == 7){
     g = parseFloat(document.getElementById('neptune').value) / 3600;
     return g;
+  }
+  else if (planetSelect.selectedIndex == 8){
+      g = parseFloat(document.getElementById('moon').value) / 3600;
+      return g;
   }
 }
 
