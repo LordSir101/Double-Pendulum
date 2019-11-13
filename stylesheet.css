@@ -1,3 +1,11 @@
+
+/* used to remove arrows in number fields for Webkit browsers like Safari and Chrome */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .topbar {
   list-style-type: none;
   margin: 0;
@@ -30,7 +38,7 @@ li a:hover{
 }
 
 .content{
-  margin-top: 5%;
+  margin-top: 4%;
   height: 1500px;
   position: relative;
 }
@@ -50,7 +58,6 @@ li a:hover{
   width: 80%;
   margin-right:auto;
   margin-left: auto;
-  margin-top: 5%;
 }
 
 fieldset{
@@ -109,6 +116,7 @@ select {
 .canvas{
   position: absolute;
   margin: auto;
+  margin-top: 0;
   top: 20;
   border: #52452d 3px solid;
   box-shadow: 1px 1px 2px #585858, -1px -1px 2px #585858, -1px 1px 2px #585858, 1px -1px 2px #585858;
@@ -124,6 +132,7 @@ select {
   font-weight: 600;
 
 }
+
 .leftSide{
   height: 100%;
   width: 40%;
@@ -132,6 +141,16 @@ select {
   top: 0;
   overflow-x: hidden;
   left: 0;
+}
+
+.rightSide{
+  height: 100%;
+  width: 60%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  right: 0;
 }
 
 .buttons{
@@ -171,15 +190,7 @@ button:hover{
   background-color: #917a55;
 }
 
-.rightSide{
-  height: 100%;
-  width: 60%;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  right: 0;
-}
+
 
 body{
   background-image: url("images/dark_wood.png");

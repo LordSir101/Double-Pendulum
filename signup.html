@@ -2,10 +2,11 @@
   <head>
     <title>Pendulum</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+
   </head>
 
-  <body>
 
+  <body>
     <ul class="topbar">
       <li class="topLink">
         <a id='back' value='back' href="index.html"><span class="btnText">Back</span></a>
@@ -27,6 +28,10 @@
             <label for='pass' class="textLabel">Password:</label>
             <input type="password" class="textfeild" step="0.01" name="input" id="pass"/>
           </li>
+          <li>
+            <label for='show' class="textLabel">Show</label>
+            <input type="checkbox" onclick="show()"/>
+          </li>
         </ul>
 
         <div class="buttonWrap">
@@ -37,5 +42,19 @@
           </ul>
         </div>
       </fieldset>
+    </form>
+    <script type="text/javascript">
+      //show password
+      function show(){
+        var input = document.getElementById("pass");
+        if (input.type === "password") {
+          input.type = "text";
+        } else {
+          input.type = "password";
+        }
+      }
+    </script>
+
   </body>
+
 </html>
