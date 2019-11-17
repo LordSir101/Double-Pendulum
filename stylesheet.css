@@ -160,6 +160,7 @@ select {
 .buttonWrap{
   display: table;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 button{
@@ -169,9 +170,12 @@ button{
   border-color: #202020;
   border-radius: 5px;
   background-color: #6B5A3F;
-
+  cursor:pointer;
 }
 
+#userBtn{
+  width: 600px;
+}
 #download{
   width: 155px;
   height: 35px;
@@ -229,4 +233,96 @@ body{
   margin: auto;
   margin-top: 10px;
   width: 35%;
+}
+.errorMessage{
+  color: #5F8A6F;
+  text-shadow:  1px 1px 0.5px #101010, 1px -1px 0.5px #101010, -1px 1px 0.5px #101010, -1px -1px 0.5px #101010;
+  font-size: 1.2em;
+  font-weight: 600;
+  margin:auto;
+  text-align: center;
+}
+/*Dropdown-------------------------------------------------------------------------------------*/
+.dropBtn:focus {
+  background-color: #917a55;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/*content box*/
+#simMenu{
+  padding: 0;
+  display: none;
+  min-width: 160px;
+  width: 600px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  margin-top: 40;
+  z-index: 500;
+  margin: 0;
+  background-color: #917a55;
+}
+.dropdownContent{
+  margin: 0;
+  padding: 0;
+}
+/*links inside*/
+.dropdownContent button {
+  width: 100%;
+  border-radius: 0;
+  margin: auto;
+  margin-bottom: 5;
+  color: black;
+  padding-bottom: 5;
+  padding-top: 5;
+  text-decoration: none;
+  display: block;
+  font-family: 'arial';
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+  color: #87ab94/*#5F8A6F*/;
+  text-shadow:  1px 1px 0.5px #101010, 1px -1px 0.5px #101010, -1px 1px 0.5px #101010, -1px -1px 0.5px #101010;
+  z-index: 501;
+}
+
+
+.dropdownContent ul{
+  position: absolute;
+  right: 0;
+  top: 40px;
+  border: 2px solid black;
+}
+
+/* Change color of dropdown links on hover */
+.dropdownContent a:hover {background-color: #ddd}
+
+/*form popup---------------------------------------------------------------------------------------------------*/
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
 }
