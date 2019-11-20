@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  session_start(); //this must be first thing on the page.  used to pass varibles via session
 ?>
 
 <html>
@@ -69,6 +69,7 @@
     //when user submits form, execute
     if($submit){
       $pass = $_GET['pass'];
+      $pass_encrypt = password_hash($pass, PASSWORD_DEFAULT); //encrypt using default algo
       $uname = $_GET['uname'];
 
       $dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuss connection
@@ -114,10 +115,10 @@
           $statement = $conn->prepare($sql);
           $statement->bindValue(1, $id);
           $statement->bindValue(2, $uname);
-          $statement->bindValue(3, $pass);
+          $statement->bindValue(3, $pass_encrypt);
           $statement->execute();
 
-          //pass the username to userIndex
+          //pass the username and id to userIndex
           $_SESSION['id'] = $id;
           $_SESSION['username'] = $uname;
           header("Location: userIndex.php");

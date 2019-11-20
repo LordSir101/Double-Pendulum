@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  session_start(); //this must be first thing on the page.  used to pass varibles via session
 ?>
 
 <html>
@@ -68,7 +68,7 @@
     class User{
       public $Id;
       public $Username;
-      public $password;
+      public $Password;
     }
     $submit = $_GET;
 
@@ -84,11 +84,15 @@
       try{
           $conn = new PDO($dsn, $userName, $password);
 
-          $sql = "select Username, Id from users where Username=? and Password=?";
+          //check if fields are filled out
+          if(empty($uname) || empty($pass)){
+            throw new Exception('Please fill out all fields');
+          }
+
+          $sql = "select Username, Id, Password from users where Username=?";
 
           $statement = $conn->prepare($sql);
           $statement->bindValue(1, $uname);
-          $statement->bindValue(2, $pass);
           $statement->execute();
 
           //if there is an error getting user object, throw an error
@@ -96,7 +100,13 @@
             throw new Exception('Your username or password is inccorect.  Please try again');
           }
 
-          //pass the username to userIndex
+          //verify password
+          //if the entered password does not match encrypted pass from db
+          if(!(password_verify($pass, $result->Password))){
+            throw new Exception('Your username or password is inccorect.  Please try again');
+          }
+
+          //pass the username and id to userIndex
           $_SESSION['username'] = $result->Username;
           $_SESSION['id'] = intval($result->Id);
           header("Location: userIndex.php");
