@@ -1,9 +1,9 @@
 <?php
 
-$num = doubleval($_GET["q"]);
+$num = doubleval($_POST["q"]);
 
 
-$dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuss connection
+$dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuses connection
 $userName = 'test01';
 $password = 'User_test';
 
@@ -15,7 +15,7 @@ $sql->execute();
 
 //prints result as array
 $result = $sql->fetchAll(\PDO::FETCH_ASSOC);
-echo(json_encode($result));
 
+echo(json_encode($result)); //sends array to xml.respone as json
 
 ?>

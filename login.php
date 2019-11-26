@@ -20,7 +20,7 @@
       </li>
     </ul>
 
-    <form id=signupForm method='GET' action='login.php'>
+    <form id=signupForm method='POST' action='login.php'>
       <fieldset>
         <legend class="infoTitle">Account Information</legend>
         <ul class="infoInput">
@@ -70,12 +70,12 @@
       public $Username;
       public $Password;
     }
-    $submit = $_GET;
+    $submit = $_POST;
 
     //when user submits form, execute
     if($submit){
-      $uname = $_GET['uname'];
-      $pass = $_GET['pass'];
+      $uname = $_POST['uname'];
+      $pass = $_POST['pass'];
 
       $dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuss connection
       $userName = 'test01';

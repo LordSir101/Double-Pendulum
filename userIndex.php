@@ -1,6 +1,6 @@
 <?php
 //get username from login/signup
-session_start();
+session_start(); //this must be first thing on the page
 $user = $_SESSION['username'];
 $id = $_SESSION['id'];
 ?>
@@ -16,11 +16,11 @@ $id = $_SESSION['id'];
     <ul class="topbar">
         <li class="topLink">
           <div class='dropdown'>
-            <button id='userBtn' value='goSignUp'><span id="user" class="btnText dropBtn">Placehold</span></button>
+            <button id='userBtn' class='menuButton' value='goSignUp'><span id="user" class="btnText dropBtn">Placehold</span></button>
           </div>
       </li>
       <li class="topLink">
-        <button id='save' value='goLogIn'><span class="btnText">Save</span></button>
+        <button id='save' class='menuButton' value='goLogIn'><span class="btnText dropBtn">Save</span></button>
       </li>
       <li class="topLink">
         <a id='logout' value='goLogOut' href="index.html"><span class="btnText">Log Out</span></a>
@@ -147,26 +147,31 @@ $id = $_SESSION['id'];
     </div>
   </div><!--end content-->
 
+  <!--popup form-->
   <div class="form-popup" id="myForm">
   <form class="form-container">
-    <h1>Name This Simulation</h1>
+    <h1 class="formHeader">Name This Simulation</h1>
 
     <input type="text" placeholder="Simulation Name" name="simName" id='simName' required>
-
-    <button class="btn cancel" id='closeform'><span class="btnText">Save</span></button>
+    <div class='buttonWrap'>
+      <button class="btn cancel" id='submitform'><span class="btnText">Save</span></button>
+      <button class="btn cancel" id='closeform'><span class="btnText">Cancel</span></button>
+  </div>
   </form>
+  <div id = "backgroundDarkener"> </div>
 </div>
 
   <script type="text/javascript" src="draw.js"></script>
   <script type="text/javascript">
 
-
     var saveButton = document.getElementById('save');
     displayUser();
+
     //display username in topbar-------------------------------------
     function displayUser(){
 
-      var user = "<?php echo $user ?>";
+      //get the user and sanitize input for XSS
+      var user = "<?php echo htmlspecialchars($user) ?>";
       document.getElementById('user').innerHTML = user;
     }
     //save the sim--------------------------------------------------------------
@@ -192,8 +197,9 @@ $id = $_SESSION['id'];
 
       //get saved simulations
       var id = "<?php echo $id ?>";
-      xml.open("GET", "getSim.php?q="+id, true);
-      xml.send();
+      xml.open("POST", "getSim.php", true);
+      xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xml.send("q="+id);
 
       xml.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
@@ -205,17 +211,24 @@ $id = $_SESSION['id'];
 
     function openform(){
       document.getElementById("myForm").style.display = "block";
+      document.getElementById("backgroundDarkener").style.display = "block";
     }
 
-    //save a new sim-----------------------------------------------------------------------------------------
-    var closeForm = document.getElementById('closeform');
-    closeForm.onclick = function(e) {
+    //save a new sim when form is submitted-----------------------------------------------------------------------------------------
+    var submitForm = document.getElementById('submitform');
+    submitForm.onclick = function(e) {
       e.preventDefault();
 
       var simName;
+      //check name is entered
       name = document.getElementById('simName').value;
+      if(name == ''){
+        alert("Please choose a name for this simulation");
+        return;
+      }
 
       document.getElementById("myForm").style.display = "none";
+
       var inputs = document.forms["valueForm"].elements['input'];
       //check if all fields are set
       for(i = 0; i < inputs.length; i++ ){
@@ -243,17 +256,30 @@ $id = $_SESSION['id'];
           alert('your simulation has been saved');
         }
       }
-      xml.open("GET", "addSim.php?q="+m1+"&r="+m2+"&s="+r1+"&t="+r2+"&u="+ang1+"&v="+ang2+"&w="+id+"&x="+name, true);
-      xml.send();
+      //send variables to addSim.php
+      xml.open("POST", "addSim.php", true);
+      xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xml.send("q="+m1+"&r="+m2+"&s="+r1+"&t="+r2+"&u="+ang1+"&v="+ang2+"&w="+id+"&x="+name);
     }
 
+    //close the form
+    var closeForm = document.getElementById('closeform');
+    closeForm.onclick = function(e) {
+        e.preventDefault();
+        var popup = document.getElementById('myForm');
+        popup.style.display = 'none';
+        document.getElementById("backgroundDarkener").style.display = "none";
+    }
     //run a saved sim------------------------------------------------------------------------------------------------------
     function run(button){
       var num = button.value;
       var xml = new XMLHttpRequest();
       xml.onreadystatechange=function() {
         if (this.readyState==4 && this.status==200) {
+          //get result as a JSON file
           var data = JSON.parse(this.response);
+
+          //display values in the form
           document.getElementById('m1').value = data[0]['M1'];
           document.getElementById('m2').value = data[0]['M2'];
           document.getElementById('r1').value = data[0]['L1'];
@@ -263,10 +289,10 @@ $id = $_SESSION['id'];
 
         }
       }
-      xml.open("GET", "runSim.php?q="+num, true);
-      xml.send();
+      xml.open("Post", "runSim.php", true);
+      xml.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xml.send("q="+num);
     }
-
 
   </script>
 

@@ -20,7 +20,7 @@
       </li>
     </ul>
 
-    <form id=signupForm method='GET' action='signup.php'>
+    <form id=signupForm method='POST' action='signup.php'>
       <fieldset>
         <legend class="infoTitle">Account Information</legend>
         <ul class="infoInput">
@@ -64,13 +64,13 @@
     </script>
 
     <?php
-    $submit = $_GET;
+    $submit = $_POST;
 
     //when user submits form, execute
     if($submit){
-      $pass = $_GET['pass'];
+      $pass = $_POST['pass'];
       $pass_encrypt = password_hash($pass, PASSWORD_DEFAULT); //encrypt using default algo
-      $uname = $_GET['uname'];
+      $uname = $_POST['uname'];
 
       $dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuss connection
       $userName = 'test01';
@@ -129,8 +129,7 @@
 
       catch(EXCEPTION $e){
         $message = $e->getMessage();
-        //for some reason, I can't call this function when it is in the other script tags
-        //so I ran it here
+        //display error message
         echo "<script type='text/javascript'>",
               "var message = '$message';",
               "document.getElementById('signupError').innerHTML = message;",

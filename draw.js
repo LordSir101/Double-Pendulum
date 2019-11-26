@@ -176,7 +176,8 @@ function randomSetup(e){
   dwnldButton.style.opacity = 0.5;
 
   var inputs = document.forms["valueForm"].elements['input'];
-  //Changes all border clors to black in case the form was validated multiple times
+  //Changes all border clors to black in case the form was validated before hitting random button
+  //(random setup does not need its own validation)
   for(i = 0; i < inputs.length; i++ ){
     inputs[i].style.border = '1.5px solid #282828';
   }
@@ -227,9 +228,6 @@ function calculate(){
   y1 = (-r1 * Math.cos(ang1));
   x2 = x1 + r2 * Math.sin(ang2);
   y2 = (y1 - r2 * Math.cos(ang2));
-
-  //this will print the coordinates as calculated
-  //console.log("pos " + x2 + " " + y2);
 
   //reverse the y-coordinates so that the pendulum is drawn in the right place
   y1 *= -1;
@@ -372,27 +370,31 @@ function rk4() {
 function submitData() {
   //***calculate time elapsed***
   var endTime = new Date();
+  //get the total time the sim has been running
   var timeDiff = endTime - startTime; //in ms
   // strip the ms
   timeDiff /= 1000;
 
-  //every second, submit data to csv file;
-  if((endTime - previousTime) >= 1000){
-    // get seconds
-    var seconds = Math.round(timeDiff);
+  //every 0.1 second, submit data to csv file;
+  if((endTime - previousTime) >= 100){
+    // get # seconds rounded down to 1 decimal place
+    var seconds = (Math.floor(timeDiff * 10)) /10;
 
     var degAng1 = ang1 * (180 / Math.PI);
     var degAng2 = ang2 * (180 / Math.PI);
 
-    var rotations1 = Math.abs(Math.floor(degAng1 / 360)); //how many full rotations the pendulum has done
+    //how many full rotations the pendulum has done
+    var rotations1 = Math.abs(Math.floor(degAng1 / 360));
     var rotations2 = Math.abs(Math.floor(degAng2 / 360));
-    //make sure the angles are between 0 and 360 deg;
+
+    //make sure the angles are between 0 and 360 deg by adding or subtracting rotations
     if(degAng1 > 360){degAng1 -= rotations1 * 360;}
     if(degAng1 < 0){degAng1 += rotations1 * 360;}
     if(degAng2 > 360){degAng2 -= rotations2 * 360;}
     if(degAng2 < 0){degAng2 += rotations2 * 360;}
 
-    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data every second
+    addData(seconds, degAng1.toFixed(2), degAng2.toFixed(2)); //add data to csv string
+
     previousTime = endTime;
   }
 }
@@ -400,10 +402,11 @@ function submitData() {
 //add data to csv file--------------------------------------------------------------------------------------------------
 function addData(time, ang1, ang2){
   csvContent += time + "," + ang1 + "," + ang2 + "\n";
-
 }
 
 // selects the appropriate gravitational acceleration based on user planet selection-----------------------------------------------
+//all accel divided by 60*60 because the sim runs ~60fps and accel is m/s^2
+//this means that 1 real second is 60 animation seconds, so accel must be scaled 60x slower
 function planetChoice() {
 
   // indeces for planets in order: 0 = Mercury ... 7 = Neptune
@@ -486,34 +489,35 @@ function setRandomValues(){
   if(degAng1 < 0){degAng1 += 360;}
   if(degAng2 > 360){degAng2 -= 360;}
   if(degAng2 < 0){degAng2 += 360;}
+  //add initial data to csv file
   addData(0, degAng1.toFixed(2), degAng2.toFixed(2));
 }
 
 //load correct sphere images based on user choice--------------------------------------------------------------------------------
 function loadSphere(){
 
-  var name = color.value;
+  var name = color.value; //from user input
 
   switch(name){
-    case "red"://red
+    case "red":
       sphere.src = "images/sphere red.png";
       break;
-    case "orange"://orange
+    case "orange":
       sphere.src = "images/sphere orange.png";
       break;
-    case "yellow"://yellow
+    case "yellow":
       sphere.src = "images/sphere yellow.png";
       break;
-    case "blue": //blue
+    case "blue":
       sphere.src = "images/sphere.png";
       break;
-    case "green"://green
+    case "green":
       sphere.src = "images/sphere green.png";
       break;
-    case "violet"://violet
+    case "violet":
       sphere.src = "images/sphere purple.png";
       break;
-    case "pink"://pink
+    case "pink":
       sphere.src = "images/sphere pink.png";
       break;
   }
