@@ -246,6 +246,10 @@ body{
 .dropBtn:focus {
   background-color: #917a55;
 }
+.menuButton{
+  height: 42px;
+  border-radius: 0;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -271,7 +275,7 @@ body{
   width: 100%;
   border-radius: 0;
   margin: auto;
-  margin-bottom: 5;
+  margin-bottom: 0;
   color: black;
   padding-bottom: 5;
   padding-top: 5;
@@ -282,47 +286,81 @@ body{
   font-size: 1.2em;
   text-align: center;
   color: #87ab94/*#5F8A6F*/;
-  text-shadow:  1px 1px 0.5px #101010, 1px -1px 0.5px #101010, -1px 1px 0.5px #101010, -1px -1px 0.5px #101010;
+
+  text-shadow:  1px 1px 1px #101010, 1px -1px 1px #101010, -1px 1px 1px #101010, -1px -1px 1px #101010;
   z-index: 501;
+  background-color: #808080;/*#917a55;*/
 }
 
-
 .dropdownContent ul{
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 40px;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 /* Change color of dropdown links on hover */
-.dropdownContent a:hover {background-color: #ddd}
+.dropdownContent button:hover {background-color: #816c4b}
 
 /*form popup---------------------------------------------------------------------------------------------------*/
 .form-popup {
   display: none;
   position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 9;
+  top: 50%;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -150px;
+  z-index: 100;
+
 }
 .form-container {
-  max-width: 300px;
   padding: 10px;
-  background-color: white;
+  background-color: #595959;
+  border: 4px solid #423724;
+  width: 500px;
+  height: 300px;
+  box-shadow: 8px 8px 16px 8px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index: 10;
 }
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
+.form-container input[type=text]{
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
+  padding: 10px;
+  margin: 10px 0 30px 0;
   border: none;
   background: #f1f1f1;
+
 }
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+.form-container input[type=text]:focus{
   background-color: #ddd;
   outline: none;
+}
+
+.formHeader{
+  text-shadow:  1px 1px 1px #101010, 1px -1px 1px #101010, -1px 1px 1px #101010, -1px -1px 1px #101010;
+  font-size: 2.5em;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #947d51;
+  text-shadow:  1px 1px 0.5px #101010, 1px -1px 0.5px #101010, -1px 1px 0.5px #101010, -1px -1px 0.5px #101010;
+  font-weight: 600;
+}
+.form-container button{
+  margin-left: 10;
+}
+div#backgroundDarkener {
+  background: #000;
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.7;
 }

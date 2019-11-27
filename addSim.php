@@ -1,13 +1,14 @@
 <?php
 
-$m1 = doubleval($_GET["q"]);
-$m2 = doubleval($_GET["r"]);
-$r1 = doubleval($_GET["s"]);
-$r2 = doubleval($_GET["t"]);
-$ang1 = doubleval($_GET["u"]);
-$ang2= doubleval($_GET["v"]);
-$id = doubleval($_GET["w"]);
-$name = $_GET["x"];
+//get variables from xml query
+$m1 = doubleval($_POST["q"]);
+$m2 = doubleval($_POST["r"]);
+$r1 = doubleval($_POST["s"]);
+$r2 = doubleval($_POST["t"]);
+$ang1 = doubleval($_POST["u"]);
+$ang2= doubleval($_POST["v"]);
+$id = doubleval($_POST["w"]);
+$name = $_POST["x"];
 
 $dsn = 'mysql:host=localhost:3303;dbname=doublePendulum'; //must specify port otherwise machine activley refuss connection
 $userName = 'test01';
